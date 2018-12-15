@@ -4,7 +4,6 @@ version=1.13.1
 revision=1
 create_wrksrc=yes
 build_wrksrc=go
-hostmakedepends="go1.4-bootstrap"
 short_desc="Go Programming Language"
 maintainer="Michael Aldridge <maldridge@voidlinux.org>"
 license="BSD-3-Clause"
@@ -15,12 +14,23 @@ checksum=81f154e69544b9fa92b1475ff5f11e64270260d46e7e36c34aafc8bc96209358
 nostrip=yes
 noverifyrdeps=yes
 
+# on musl there is no binary bootstrap package
+case "${XBPS_MACHINE}" in
+    *-musl)
+        hostmakedepends="go1.4-bootstrap"
+        _go14_bootstrap=yes
+        ;;
+    *) hostmakedepends="go1.12-bootstrap";;
+esac
+
 case "${XBPS_TARGET_MACHINE}" in
 	aarch64*) _goarch=arm64 ;;
 	arm*) _goarch=arm ;;
 	mips*) _goarch=mips ;;
 	i686*) _goarch=386 ;;
 	x86_64*) _goarch=amd64 ;;
+	ppc64le*) _goarch=ppc64le ;;
+	ppc64*) broken="Upstream does not support ELFv2 for big endian ppc64";;
 	*) _goarch=${XBPS_TARGET_MACHINE} ;;
 esac
 
@@ -30,11 +40,15 @@ do_build() {
 	# dependency
 	unset CGO_CXXFLAGS CGO_CFLAGS CGO_ENABLED
 
+	if [ "$_go14_bootstrap" ]; then
+		export GOROOT_BOOTSTRAP="/usr/lib/go1.4"
+		export GOCACHE=off
+	else
+		export GOROOT_BOOTSTRAP="/usr/lib/go1.12"
+	fi
 
-	export GOCACHE=off
 	export GOROOT=$PWD
 	export GOROOT_FINAL="/usr/lib/go"
-	export GOROOT_BOOTSTRAP="/usr/lib/go1.4"
 	export GOARCH=${_goarch}
 
 	cd "src"
