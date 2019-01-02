@@ -234,6 +234,10 @@ chroot_sync_repodata() {
         esac
     else
         case "$XBPS_MACHINE" in
+            ppc*)
+                install -Dm644 ${XBPS_DISTDIR}/etc/xbps.d/repos-remote-${XBPS_MACHINE}.conf \
+                    $confdir/20-repository-remote.conf
+                ;;
             *-musl)
                 install -Dm644 ${XBPS_DISTDIR}/etc/xbps.d/repos-remote-musl.conf \
                     $confdir/20-repository-remote.conf
@@ -271,6 +275,11 @@ chroot_sync_repodata() {
         else
             # and then remote repos for target machine
             case "$XBPS_TARGET_MACHINE" in
+            ppc*)
+                # ppc* glibc/musl
+                install -Dm644 ${XBPS_DISTDIR}/etc/xbps.d/repos-remote-${XBPS_TARGET_MACHINE}.conf \
+                    $crossconfdir/20-repository-remote.conf
+                ;;
             aarch64*)
                 # aarch64 glibc/musl
                 install -Dm644 ${XBPS_DISTDIR}/etc/xbps.d/repos-remote-aarch64.conf \
