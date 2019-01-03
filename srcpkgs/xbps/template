@@ -39,6 +39,30 @@ post_install() {
 		echo "repository=https://alpha.de.repo.voidlinux.org/current/aarch64" > \
 			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
 		;;
+	ppc64le)
+		echo "repository=https://auto.voidlinux-ppc.org/current" > \
+			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
+		;;
+	ppc64le-musl)
+		echo "repository=https://auto.voidlinux-ppc.org/current/musl" > \
+			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
+		;;
+	ppc64)
+		echo "repository=https://auto.voidlinux-ppc.org/current/be" > \
+			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
+		;;
+	ppc64-musl)
+		echo "repository=https://auto.voidlinux-ppc.org/current/be/musl" > \
+			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
+		;;
+	ppc)
+		echo "repository=https://auto.voidlinux-ppc.org/current/ppc" > \
+			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
+		;;
+	ppc-musl)
+		echo "repository=https://auto.voidlinux-ppc.org/current/ppc/musl" > \
+			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
+		;;
 	*-musl) # XXX different repo location
 		echo "repository=https://alpha.de.repo.voidlinux.org/current/musl" > \
 			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
@@ -48,6 +72,7 @@ post_install() {
 			${DESTDIR}/usr/share/xbps.d/00-repository-main.conf
 		;;
 	esac
+	vinstall "${FILESDIR}/32:32:d3:b3:72:0b:df:18:81:d0:c7:ca:d5:7d:f3:95.plist" 644 var/db/xbps/keys
 	vlicense LICENSE
 	vlicense LICENSE.3RDPARTY
 }
