@@ -37,7 +37,19 @@ do_configure() {
 post_install() {
 	local repo="repository=https://alpha.de.repo.voidlinux.org/current" suffix=
 	case "$XBPS_TARGET_MACHINE" in
+		ppcle*) repo="https://auto.voidlinux-ppc.org/testing";;
+		ppc*)   repo="https://auto.voidlinux-ppc.org/current";;
+	esac
+	case "$XBPS_TARGET_MACHINE" in
 		aarch64*)     suffix="/aarch64";;
+		ppc64le)      suffix="";;
+		ppc64le-musl) suffix="/musl";;
+		ppc64)        suffix="/be";;
+		ppc64-musl)   suffix="/be/musl";;
+		ppc)          suffix="/ppc";;
+		ppc-musl)     suffix="/ppc/musl";;
+		ppcle)        suffix="/ppcle";;
+		ppcle-musl)   suffix="/ppcle-musl";;
 		*-musl)       suffix="/musl";;
 	esac
 
@@ -46,6 +58,7 @@ post_install() {
 	echo "architecture=${XBPS_TARGET_MACHINE}" > \
 		${DESTDIR}/usr/share/xbps.d/xbps-arch.conf
 
+	vinstall "${FILESDIR}/32:32:d3:b3:72:0b:df:18:81:d0:c7:ca:d5:7d:f3:95.plist" 644 var/db/xbps/keys
 	vlicense LICENSE
 	vlicense LICENSE.3RDPARTY
 }
