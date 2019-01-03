@@ -18,6 +18,30 @@ do_install() {
 			echo "repository=https://alpha.de.repo.voidlinux.org/current/aarch64/debug" > \
 				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
 			;;
+		ppc64le)
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64le-musl)
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/musl/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/musl/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64)
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/be/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/be/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64-musl)
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/be/musl/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.void-ppc64.octaforge.org/current/be/musl/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
 		*-musl)
 			echo "repository=https://alpha.de.repo.voidlinux.org/current/musl/nonfree" > \
 				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
