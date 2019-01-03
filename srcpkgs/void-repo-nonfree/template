@@ -1,7 +1,8 @@
 # Template file for 'void-repo-nonfree'
 pkgname=void-repo-nonfree
 version=9
-revision=4
+# bumped
+revision=6
 archs=noarch
 build_style=meta
 short_desc="Void Linux drop-in file for the nonfree repository"
@@ -16,6 +17,42 @@ do_install() {
 			echo "repository=https://alpha.de.repo.voidlinux.org/current/aarch64/nonfree" > \
 				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
 			echo "repository=https://alpha.de.repo.voidlinux.org/current/aarch64/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64le)
+			echo "repository=https://auto.voidlinux-ppc.org/current/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.voidlinux-ppc.org/current/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64le-musl)
+			echo "repository=https://auto.voidlinux-ppc.org/current/musl/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.voidlinux-ppc.org/current/musl/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64)
+			echo "repository=https://auto.voidlinux-ppc.org/current/be/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.voidlinux-ppc.org/current/be/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc64-musl)
+			echo "repository=https://auto.voidlinux-ppc.org/current/be/musl/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.voidlinux-ppc.org/current/be/musl/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc)
+			echo "repository=https://auto.voidlinux-ppc.org/current/ppc/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.voidlinux-ppc.org/current/ppc/debug" > \
+				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
+			;;
+		ppc-musl)
+			echo "repository=https://auto.voidlinux-ppc.org/current/ppc/musl/nonfree" > \
+				${DESTDIR}/usr/share/xbps.d/10-repository-nonfree.conf
+			echo "repository=https://auto.voidlinux-ppc.org/current/ppc/musl/debug" > \
 				${DESTDIR}/usr/share/xbps.d/20-repository-debug.conf
 			;;
 		*-musl)
