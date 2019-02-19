@@ -41,6 +41,9 @@ x86_64-musl)
 	depends+=" libexecinfo"
 	LDFLAGS="-lexecinfo"
 	;;
+ppc64*)
+	broken="Stuck on generating precompile statements"
+	;;
 esac
 
 case "$XBPS_TARGET_MACHINE" in
