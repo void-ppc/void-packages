@@ -40,19 +40,19 @@ else
 		;;
 	ppc64le)
 		distfiles+="
-		 https://alpha.de.repo.voidlinux.org/distfiles/cargo-${_cargo_dist_version}-powerpc64le-unknown-linux-gnu.tar.xz"
+		 https://void-ppc64.octaforge.org/distfiles/cargo-${_cargo_dist_version}-powerpc64le-unknown-linux-gnu.tar.xz"
 		checksum+="
 		 03ece4d677ad59f08a514eb90dd3bd6cad4399fbbaf3d0e916323fbce38e25d1"
 		;;
 	ppc64le-musl)
 		distfiles+="
-		 https://alpha.de.repo.voidlinux.org/distfiles/cargo-${_cargo_dist_version}-powerpc64le-unknown-linux-musl.tar.xz"
+		 https://void-ppc64.octaforge.org/distfiles/cargo-${_cargo_dist_version}-powerpc64le-unknown-linux-musl.tar.xz"
 		checksum+="
 		 801490f04eac96e883f56434747042c375aa3d210b224c2735e02a3a1eab95a0"
 		;;
 	ppc64-musl)
 		distfiles+="
-		 https://alpha.de.repo.voidlinux.org/distfiles/cargo-${_cargo_dist_version}-powerpc64-unknown-linux-musl.tar.xz"
+		 https://void-ppc64.octaforge.org/distfiles/cargo-${_cargo_dist_version}-powerpc64-unknown-linux-musl.tar.xz"
 		checksum+="
 		 ae90844974681c3ee85a855ae0ed27f06d22215e40f825f3b7ca705d8a7cfe7b"
 		;;
