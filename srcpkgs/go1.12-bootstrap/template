@@ -1,0 +1,46 @@
+# Template file for 'go1.12-bootstrap'
+pkgname=go1.12-bootstrap
+_dist_version=1.12
+version=${_dist_version}.0
+revision=1
+archs="x86_64 i686 armv6l armv7l aarch64 ppc64le"
+wrksrc="go"
+short_desc="Go 1.12 (bootstrap compiler)"
+maintainer="q66 <daniel@octaforge.org>"
+license="3-clause-BSD"
+homepage="https://golang.org"
+nostrip=yes
+noverifyrdeps=yes
+
+case "$XBPS_TARGET_MACHINE" in
+	x86_64)
+		_dist_arch="amd64"
+		checksum="750a07fef8579ae4839458701f4df690e0b20b8bcce33b437e4df89c451b6f13"
+		;;
+	i686)
+		_dist_arch="386"
+		checksum="3ac1db65a6fa5c13f424b53ee181755429df0c33775733cede1e0d540440fd7b"
+		;;
+	arm*)
+		_dist_arch="armv6l"
+		checksum="ea0636f055763d309437461b5817452419411eb1f598dc7f35999fae05bcb79a"
+		;;
+	aarch64)
+		_dist_arch="arm64"
+		checksum="b7bf59c2f1ac48eb587817a2a30b02168ecc99635fc19b6e677cce01406e3fac"
+		;;
+	ppc64le)
+		_dist_arch="ppc64le"
+		checksum="5be21e7035efa4a270802ea04fb104dc7a54e3492641ae44632170b93166fb68"
+		;;
+esac
+
+distfiles="https://dl.google.com/go/go${_dist_version}.linux-${_dist_arch}.tar.gz"
+
+do_install() {
+	vmkdir usr/lib/go1.12
+	vcopy bin usr/lib/go1.12
+	vcopy src usr/lib/go1.12
+	vcopy pkg usr/lib/go1.12
+	vlicense LICENSE
+}
