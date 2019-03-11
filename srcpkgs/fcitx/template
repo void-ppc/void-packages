@@ -1,7 +1,7 @@
 # Template file for 'fcitx'
 pkgname=fcitx
 version=4.2.9.6
-revision=3
+revision=4
 build_style=cmake
 short_desc="Flexible Context-aware Input Tool with eXtension"
 maintainer="Robert La Spina <rkidlaspina@gmail.com>"
@@ -10,13 +10,12 @@ homepage="https://fcitx-im.org/"
 distfiles="http://download.fcitx-im.org/fcitx/fcitx-${version}_dict.tar.xz"
 checksum=a59351bbae42d62aad61bd604154b8a49b822b3337ff4d2df5622881f680d943
 
-hostmakedepends="pkg-config doxygen gobject-introspection extra-cmake-modules qt-qmake"
+hostmakedepends="pkg-config doxygen gobject-introspection extra-cmake-modules"
 makedepends="iso-codes gettext-devel enchant-devel libxml2-devel
- libxkbfile-devel icu-devel qt-devel dbus-devel gtk+-devel gtk+3-devel"
+ libxkbfile-devel icu-devel dbus-devel gtk+-devel gtk+3-devel"
 lib32disabled=yes
 configure_args="-DSYSCONFDIR=/etc -DFORCE_OPENCC=OFF -DFORCE_PRESAGE=OFF
- -DENABLE_GTK2_IM_MODULE=ON -DENABLE_GTK3_IM_MODULE=ON -DENABLE_QT_IM_MODULE=ON
- -DFORCE_ENCHANT=ON"
+ -DENABLE_GTK2_IM_MODULE=ON -DENABLE_GTK3_IM_MODULE=ON -DFORCE_ENCHANT=ON"
 
 case "$XBPS_TARGET_MACHINE" in
 	*-musl) configure_args+=" -DENABLE_BACKTRACE=OFF";;
@@ -24,7 +23,27 @@ esac
 
 if [ "$CROSS_BUILD" ]; then
 	configure_args+=" -DENABLE_GIR=OFF"
-	hostmakedepends+=" glib-devel qt-host-tools fcitx"
+	hostmakedepends+=" glib-devel fcitx"
+fi
+
+build_options="qt4"
+
+case "$XBPS_TARGET_MACHINE" in
+	ppc*) ;;
+	*) build_options_default="qt4" ;;
+esac
+
+subpackages="fcitx-devel libfcitx libfcitx-gtk libfcitx-gtk3"
+
+if [ "$build_option_qt4" ]; then
+	hostmakedepends+=" qt-qtmake"
+	makedepends+=" qt-devel"
+	configure_args+=" -DENABLE_QT_IM_MODULE=ON"
+	if [ "$CROSS_BUILD" ]; then
+		hostmakedepends+=" qt-host-tools"
+	fi
+else
+	configure_args+=" -DENABLE_QT=OFF"
 fi
 
 pre_configure() {
