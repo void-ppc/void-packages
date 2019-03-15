@@ -9,7 +9,7 @@ short_desc="Glorious Haskell Compiler - precompiled binaries"
 maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="BSD"
 homepage="http://www.haskell.org/ghc/"
-archs="i686 x86_64*"
+archs="i686 x86_64* ppc64le"
 nostrip=yes
 noshlibprovides=yes
 conflicts="ghc>=0 ghc-doc>=0"
@@ -26,6 +26,10 @@ x86_64-musl)
 i686)
 	distfiles="https://downloads.haskell.org/~ghc/${version%[!0-9]}/ghc-${version}-i386-deb9-linux.tar.xz"
 	checksum=1cddb907393a669342b1a922dd16d505d9d93d50bd9433a54a8162f8701250dc
+	;;
+ppc64le)
+	distfiles="https://void-ppc64.octaforge.org/distfiles/ghc-${version}-powerpc64le-void-linux.tar.xz"
+	checksum=ef076857a4b74296446b979e7b44ded69f8a6ae2223c08521cee868e59544640
 	;;
 esac
 
