@@ -17,7 +17,7 @@ hostmakedepends="pkg-config qt5-qmake qt5-host-tools python"
 makedepends="alsa-lib-devel ffmpeg-devel gtk+3-devel libappindicator-devel
  libdbusmenu-glib-devel libopenal-devel minizip-devel opus-devel xxHash-devel
  $(vopt_if pulseaudio 'pulseaudio-devel') qt5-devel range-v3 libva-devel"
-depends="qt5-imageformats qt5>=5.11.3<5.11.4"
+depends="qt5-imageformats qt5>=5.12.2<5.12.3"
 short_desc="Telegram Desktop messaging app"
 maintainer="John <johnz@posteo.net>"
 license="GPL-3.0-or-later WITH OpenSSL"
