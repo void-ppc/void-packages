@@ -31,8 +31,15 @@ case "${XBPS_TARGET_MACHINE}" in
 	x86_64*) _goarch=amd64 ;;
 	ppc64le*) _goarch=ppc64le ;;
 	ppc64*) broken="Upstream does not support ELFv2 for big endian ppc64";;
+	ppc*) broken="Upstream does not support 32-bit ppc";;
 	*) _goarch=${XBPS_TARGET_MACHINE} ;;
 esac
+
+if [ "$CROSS_BUILD" ]; then
+	if [ "${XBPS_MACHINE%%-musl}" = "${XBPS_TARGET_MACHINE%%-musl}" ]; then
+		broken="Cross-compiling to different libc is not supported"
+	fi
+fi
 
 do_build() {
 	unset GCC CC CXX LD CFLAGS
