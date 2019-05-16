@@ -34,6 +34,12 @@ case "${XBPS_TARGET_MACHINE}" in
 	*) _goarch=${XBPS_TARGET_MACHINE} ;;
 esac
 
+if [ "$CROSS_BUILD" ]; then
+	if [ "${XBPS_MACHINE%%-musl}" = "${XBPS_TARGET_MACHINE%%-musl}" ]; then
+		broken="Cross-compiling to different libc is not supported"
+	fi
+fi
+
 do_build() {
 	unset GCC CC CXX LD CFLAGS
 	# FIXME: work around leaking go build-style vars when built as a
