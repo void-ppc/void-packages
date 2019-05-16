@@ -1,0 +1,11 @@
+https://lkml.org/lkml/2019/5/15/22
+--- a/arch/powerpc/kernel/security.c
++++ b/arch/powerpc/kernel/security.c
+@@ -4,6 +4,7 @@
+ //
+ // Copyright 2018, Michael Ellerman, IBM Corporation.
+ 
++#include <linux/cpu.h>
+ #include <linux/kernel.h>
+ #include <linux/device.h>
+ #include <linux/seq_buf.h>
