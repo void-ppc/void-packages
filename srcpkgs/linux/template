@@ -1,6 +1,6 @@
 # Template file for 'linux'
 pkgname=linux
-version=4.19
+version=5.0
 revision=2
 build_style=meta
 homepage="http://www.voidlinux.org/"
