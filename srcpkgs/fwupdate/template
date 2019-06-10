@@ -2,6 +2,7 @@
 pkgname=fwupdate
 version=12
 revision=1
+archs="x86_64* i686* aarch64* arm*"
 build_style=gnu-makefile
 hostmakedepends="pkg-config"
 makedepends="elfutils-devel gnu-efi-libs libefivar-devel popt-devel"
