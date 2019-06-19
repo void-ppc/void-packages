@@ -29,12 +29,25 @@ build_options="webengine"
 desc_option_webengine="Build Chromium-based WebEngine component"
 
 case "$XBPS_TARGET_MACHINE" in
-	x86_64*|i686*|ppc64le*) build_options_default="webengine";;
+	x86_64*|i686*|ppc64*) build_options_default="webengine";;
 	armv5tel*) ;; # qtwebengine uses VSM assembler commands
 	aarch64*) build_options_default="webengine";;
 	arm*) ;; # qtwebengine requires a 32bit host toolchain http://sprunge.us/rbRyWQ
 	*) ;; # assume no webengine
 esac
+
+if [ "$build_option_webengine" ]; then
+	# v8 requires libatomic on ppc*/s390x/mips*
+	case "$XBPS_TARGET_MACHINE" in
+		mips*|ppc*) makedepends+=" libatomic-devel" ;;
+		*) ;;
+	esac
+	# also need it on host when it's one of those archs
+	case "$XBPS_MACHINE" in
+		mips*|ppc*) hostmakedepends+=" libatomic-devel" ;;
+		*) ;;
+	esac
+fi
 
 subpackages="qt5-3d qt5-3d-devel qt5-charts qt5-charts-devel
  qt5-connectivity qt5-connectivity-devel qt5-datavis3d qt5-datavis3d-devel
@@ -226,9 +239,6 @@ do_configure() {
 		sed -i qtwebengine/src/3rdparty/chromium/base/allocator/partition_allocator/spin_lock.cc \
 			qtwebengine/src/3rdparty/chromium/third_party/pdfium/third_party/base/allocator/partition_allocator/spin_lock.cc \
 			-e 's;"yield";"nop";'
-		;;
-	ppc64le*) # enable webengine but not on BE ppc64 for now
-		sed -i qtwebengine/mkspecs/features/platform.prf -e 's;#ppc64le;;'
 		;;
 	esac
 
