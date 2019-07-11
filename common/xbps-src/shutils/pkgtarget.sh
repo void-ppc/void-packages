@@ -52,14 +52,17 @@ remove_pkg_autodeps() {
 
     remove_pkg_cross_deps
     $XBPS_RECONFIGURE_CMD -a >> $tmplogf 2>&1
-    echo yes | $XBPS_REMOVE_CMD -Ryod >> $tmplogf 2>&1
-    rval=$?
+    # workaround for xbps bug, should be sufficient to run 15 passes
+    for x in $(seq 1 15); do
+        echo yes | $XBPS_REMOVE_CMD -Ryod >> $tmplogf 2>&1
+        rval=$?
 
-    if [ $rval -ne 0 ]; then
-        msg_red "${pkgver:-xbps-src}: failed to remove autodeps: (returned $rval)\n"
-        cat $tmplogf && rm -f $tmplogf
-        msg_error "${pkgver:-xbps-src}: cannot continue!\n"
-    fi
+        if [ $rval -ne 0 ]; then
+            msg_red "${pkgver:-xbps-src}: failed to remove autodeps: (returned $rval)\n"
+            cat $tmplogf && rm -f $tmplogf
+            msg_error "${pkgver:-xbps-src}: cannot continue!\n"
+        fi
+    done
     rm -f $tmplogf
 }
 
