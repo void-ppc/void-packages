@@ -13,12 +13,15 @@ remove_pkg_cross_deps() {
         XBPS_REMOVE_XCMD="env XBPS_TARGET_ARCH=$XBPS_TARGET_MACHINE xbps-remove -r /usr/$XBPS_CROSS_TRIPLET"
     fi
 
-    $XBPS_REMOVE_XCMD -Ryo > $tmplogf 2>&1
-    if [ $? -ne 0 ]; then
-        msg_red "${pkgver:-xbps-src}: failed to remove autocrossdeps:\n"
-        cat $tmplogf && rm -f $tmplogf
-        msg_error "${pkgver:-xbps-src}: cannot continue!\n"
-    fi
+    # workaround for xbps bug, should be sufficient to run 15 passes
+    for x in $(seq 1 15); do
+        $XBPS_REMOVE_XCMD -Ryo > $tmplogf 2>&1
+        if [ $? -ne 0 ]; then
+            msg_red "${pkgver:-xbps-src}: failed to remove autocrossdeps:\n"
+            cat $tmplogf && rm -f $tmplogf
+            msg_error "${pkgver:-xbps-src}: cannot continue!\n"
+        fi
+    done
     rm -f $tmplogf
 }
 
