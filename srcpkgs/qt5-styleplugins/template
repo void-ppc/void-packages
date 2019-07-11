@@ -1,7 +1,8 @@
 # Template file for 'qt5-styleplugins'
 pkgname=qt5-styleplugins
 version=5.0.0
-revision=8
+# bumped by void-power
+revision=9
 _gitrev=600c296f4d429ffeb8203feb54efeacc2bbea0f7
 wrksrc="qtstyleplugins-${_gitrev}"
 build_style=qmake
