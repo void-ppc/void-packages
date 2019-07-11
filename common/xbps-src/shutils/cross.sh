@@ -54,6 +54,8 @@ prepare_cross_sysroot() {
     ln -s usr/include ${XBPS_CROSS_BASE}/include
     ln -s usr/lib ${XBPS_CROSS_BASE}/lib
 
+    install_cross_pkg $cross || return 1
+
     touch -f $statefile
 
     return 0
