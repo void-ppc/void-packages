@@ -1,0 +1,73 @@
+From fa457c2f88bbbe91e7cd939f0b366bfc49a373d4 Mon Sep 17 00:00:00 2001
+From: Shawn Anastasio <shawn@anastas.io>
+Date: Wed, 17 Jul 2019 14:53:32 -0500
+Subject: [PATCH] powerpc/dma: Implement arch_dma_mmap_pgprot
+
+Implement arch_dma_mmap_pgprot for powerpc. This allows us to only
+enable cache inhibiting for noncoherent mappings.
+
+This was the previous behavior before commit 6666cc17d780
+("powerpc/dma: remove dma_nommu_mmap_coherent").
+
+Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=204145
+Fixes: 6666cc17d780 ("powerpc/dma: remove dma_nommu_mmap_coherent")
+Signed-off-by: Shawn Anastasio <shawn@anastas.io>
+---
+ arch/powerpc/Kconfig             |  1 +
+ arch/powerpc/kernel/Makefile     |  3 ++-
+ arch/powerpc/kernel/dma-common.c | 17 +++++++++++++++++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
+ create mode 100644 arch/powerpc/kernel/dma-common.c
+
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index d8dcd8820369..77f6ebf97113 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -121,6 +121,7 @@ config PPC
+ 	select ARCH_32BIT_OFF_T if PPC32
+ 	select ARCH_HAS_DEBUG_VIRTUAL
+ 	select ARCH_HAS_DEVMEM_IS_ALLOWED
++	select ARCH_HAS_DMA_MMAP_PGPROT
+ 	select ARCH_HAS_ELF_RANDOMIZE
+ 	select ARCH_HAS_FORTIFY_SOURCE
+ 	select ARCH_HAS_GCOV_PROFILE_ALL
+diff --git a/arch/powerpc/kernel/Makefile b/arch/powerpc/kernel/Makefile
+index 56dfa7a2a6f2..ea0c69236789 100644
+--- a/arch/powerpc/kernel/Makefile
++++ b/arch/powerpc/kernel/Makefile
+@@ -49,7 +49,8 @@ obj-y				:= cputable.o ptrace.o syscalls.o \
+ 				   signal.o sysfs.o cacheinfo.o time.o \
+ 				   prom.o traps.o setup-common.o \
+ 				   udbg.o misc.o io.o misc_$(BITS).o \
+-				   of_platform.o prom_parse.o
++				   of_platform.o prom_parse.o \
++				   dma-common.o
+ obj-$(CONFIG_PPC64)		+= setup_64.o sys_ppc32.o \
+ 				   signal_64.o ptrace32.o \
+ 				   paca.o nvram_64.o firmware.o
+diff --git a/arch/powerpc/kernel/dma-common.c b/arch/powerpc/kernel/dma-common.c
+new file mode 100644
+index 000000000000..5a15f99f4199
+--- /dev/null
++++ b/arch/powerpc/kernel/dma-common.c
+@@ -0,0 +1,17 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Contains common dma routines for all powerpc platforms.
++ *
++ * Copyright (C) 2019 Shawn Anastasio (shawn@anastas.io)
++ */
++
++#include <linux/mm.h>
++#include <linux/dma-noncoherent.h>
++
++pgprot_t arch_dma_mmap_pgprot(struct device *dev, pgprot_t prot,
++		unsigned long attrs)
++{
++	if (!dev_is_dma_coherent(dev))
++		return pgprot_noncached(prot);
++	return prot;
++}
+-- 
+2.22.0
+
