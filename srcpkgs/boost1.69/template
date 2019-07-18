@@ -1,7 +1,8 @@
 # Template file for 'boost'
 pkgname=boost1.69
 version=1.69.0
-revision=7
+# void-ppc bump
+revision=9
 wrksrc="boost_${version//\./_}"
 hostmakedepends="which bzip2-devel icu-devel python-devel python3-devel"
 makedepends="zlib-devel bzip2-devel icu-devel python-devel python3-devel"
