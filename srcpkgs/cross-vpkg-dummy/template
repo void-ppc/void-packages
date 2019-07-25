@@ -61,6 +61,7 @@ case "$XBPS_TARGET_MACHINE" in
 	;;
 esac
 
-if [ -z "$XBPS_CROSS_BUILD" ]; then
-	broken="This package is only meant to be used by xbps-src to cross compile."
-fi
+case "$XBPS_TARGET_MACHINE" in
+	x86_64) broken="no cross-profile for ${XBPS_TARGET_MACHINE}";;
+	*) ;;
+esac
