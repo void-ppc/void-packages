@@ -1,6 +1,6 @@
 # Template file for 'gnome-games'
 pkgname=gnome-games
-version=3.32.1
+version=3.33.90
 revision=1
 build_style=meson
 hostmakedepends="glib-devel pkg-config vala-devel"
@@ -12,5 +12,4 @@ maintainer="Enno Boland <gottox@voidlinux.org>"
 license="GPL-3.0-or-later"
 homepage="https://wiki.gnome.org/Apps/Games"
 distfiles="${GNOME_SITE}/${pkgname}/${version%.*}/${pkgname}-${version}.tar.xz"
-checksum=4b58fbb8ced2d7561ac4030d0dbab6d9509a1e8d1d85188a3941b89d4f0aa371
-nocross="depends on libmanette, which hard depends on gobject-introspection"
+checksum=89faa9007be51ce5264675b94818ed5a4310bb02292fbc5ed850983fd9cc125d
