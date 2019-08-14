@@ -10,6 +10,13 @@ homepage="https://github.com/dalance/gip"
 distfiles="https://github.com/dalance/gip/archive/v${version}.tar.gz"
 checksum=b8f5ba15a554ba4cb85a32449a8f665db24ab9dde7c47e7e6e10724fc9a76422
 
+pre_build() {
+	# the defined version (0.2.39 at the time of writing) is buggy on
+	# ppc64*-musl, pin the oldest newer working version; on next update
+	# please check Cargo.lock to verify if this is still necessary
+	cargo update --package libc --precise 0.2.43
+}
+
 post_install() {
 	vlicense LICENSE-MIT
 }
