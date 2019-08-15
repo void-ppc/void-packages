@@ -15,5 +15,6 @@ distfiles="${KDE_SITE}/applications/${version}/src/${pkgname}-${version}.tar.xz"
 checksum=d24023381304fbe388a0840921599d13c86912a1285acfc0a7d607962e37c5cf
 
 case "$XBPS_TARGET_MACHINE" in
-	arm*) broken="depends on qt5-webengine";;
+	ppc64*) ;;
+	arm*|ppc*) broken="depends on qt5-webengine";;
 esac
