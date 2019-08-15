@@ -22,6 +22,11 @@ checksum=ab8bade6c7eec6a9ae03f435cad65e79c4ca031d19020aa6e2a4da2868f49a2a
 
 nocross="genManual: cannot execute binary file: Exec format error"
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64*) ;;
+        ppc*) broken="no webengine on 32-bit ppc" ;;
+esac
+
 pre_configure() {
 	vsed -i -e "s/-lporttime//" mscore/CMakeLists.txt
 }
