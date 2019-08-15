@@ -23,6 +23,11 @@ checksum="bb57fae7ee620438f66f679a95c336e5a0d2819f3a8677607cb41c1ee1a78591
  8abe09aa0c577b9be05a7343438f9a37718689f74b9d7a124590f5ba3bb2764f"
 skip_extraction="server.js stremio.asar"
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64le*) ;;
+        ppc*) broken="no webengine on BE ppc" ;;
+esac
+
 if [ "$CROSS_BUILD" ]; then
 	hostmakedepends+=" ${makedepends}"
 fi
