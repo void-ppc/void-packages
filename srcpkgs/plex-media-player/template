@@ -42,6 +42,11 @@ if [ "$CROSS_BUILD" ]; then
 	hostmakedepends+=" qt5-devel qt5-host-tools"
 fi
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64*) ;;
+        ppc*) broken="no webengine on 32-bit ppc" ;;
+esac
+
 case $XBPS_TARGET_MACHINE in
 	arm*) nocross="Qt5Webengine is not aviable for 32bit cross"
 esac

@@ -17,7 +17,8 @@ distfiles="${KDE_SITE}/applications/${version}/src/konqueror-${version}.tar.xz"
 checksum=257488e521c024fb6c8fdbef71aaccd9315505c8b14c6ffde0ce4060a48579b4
 
 case "$XBPS_TARGET_MACHINE" in
-        arm*) broken="depends on qt5-webengine";;
+	ppc64*) ;;
+	arm*|ppc*) broken="depends on qt5-webengine";;
 esac
 
 konqueror-devel_package() {
