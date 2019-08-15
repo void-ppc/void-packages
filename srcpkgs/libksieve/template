@@ -14,6 +14,11 @@ homepage="https://community.kde.org/KDE_PIM"
 distfiles="${KDE_SITE}/release-service/${version}/src/libksieve-${version}.tar.xz"
 checksum=6c3d49e2ce4d8e6b7c1b4328aa6065a01c7711223dd4f3b9db3a542f9fc0a84c
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64*) ;;
+        ppc*) broken="no webengine on 32-bit ppc" ;;
+esac
+
 libksieve-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision} ${makedepends}"
 	short_desc+=" - development files"
