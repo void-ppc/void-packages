@@ -16,6 +16,11 @@ homepage="https://clipgrab.org"
 distfiles="https://download.clipgrab.org/clipgrab-${version}.tar.gz"
 checksum=b39b44fa31035ecab8f87cedddbcf9ce60082b0bebccdd4327582bf97d6dee4a
 
+case "$XBPS_TARGET_MACHINE" in
+	ppc64le*) ;;
+	ppc*) broken="no webengine on BE ppc" ;;
+esac
+
 if [ "$CROSS_BUILD" ]; then
 	hostmakedepends+=" qt5-location-devel qt5-quickcontrols2-devel
 	 qt5-declarative-devel qt5-webchannel-devel qt5-webengine-devel
