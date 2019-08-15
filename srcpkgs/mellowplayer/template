@@ -18,6 +18,11 @@ homepage="https://colinduquesnoy.gitlab.io/MellowPlayer/"
 distfiles="https://gitlab.com/ColinDuquesnoy/MellowPlayer/-/archive/${version}/MellowPlayer-${version}.tar.bz2"
 checksum=89fb07b39265857263a7c4355cadaa5b9d8ad8c6bfff1c63764accf4f0dc3765
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64*) ;;
+        ppc*) broken="no webengine on 32-bit ppc" ;;
+esac
+
 if [ "$CROSS_BUILD" ]; then
 	hostmakedepends+=" qt5-host-tools"
 fi
