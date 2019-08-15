@@ -20,7 +20,8 @@ if [ "$CROSS_BUILD" ]; then
 fi
 
 case "$XBPS_TARGET_MACHINE" in
-	arm*) broken="qt5-webengine-devel unavailable" ;;
+	ppc64*) ;;
+	arm*|ppc*) broken="qt5-webengine-devel unavailable" ;;
 esac
 
 post_install() {
