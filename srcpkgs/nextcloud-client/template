@@ -22,7 +22,8 @@ desc_option_dolphin="Build KDE dolphin support"
 build_options_default="dolphin"
 
 case "$XBPS_TARGET_MACHINE" in
-	arm*) broken="qt5-webengine-devel unavailable" ;;
+	ppc64*) ;;
+	arm*|ppc*) broken="qt5-webengine-devel unavailable" ;;
 esac
 
 if [ "$CROSS_BUILD" ]; then
