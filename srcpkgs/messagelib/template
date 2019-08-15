@@ -22,6 +22,11 @@ if [ "$CROSS_BUILD" ]; then
 	LDFLAGS=" -Wl,-rpath-link,../../bin"
 fi
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64le*) ;;
+        ppc*) broken="no webengine on BE ppc" ;;
+esac
+
 messagelib-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision} ${makedepends}"
 	short_desc+=" - development files"
