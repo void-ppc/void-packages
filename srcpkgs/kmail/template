@@ -19,4 +19,6 @@ checksum=1168620b9571e29218332781cddd29e642cb05d3e186f6b294589e008a417025
 
 case $XBPS_TARGET_MACHINE in
 	*-musl) broken="segfaults on start";;
+	ppc64le*) ;;
+	ppc*) broken="no webengine on BE ppc";;
 esac
