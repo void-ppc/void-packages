@@ -18,6 +18,11 @@ distfiles="${KDE_SITE}/${pkgname}/${version}/src/${pkgname}-${version}.tar.xz"
 checksum=6849c289ab9f4ad227cc4f4a52bf14e0eacab89ebf81020b0238d5ae607d388a
 nocross="subversion-devel is not available"
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64*) ;;
+        ppc*) broken="no webengine on 32-bit ppc" ;;
+esac
+
 kdevelop-devel_package() {
 	depends="kdevelop>=${version}_${revision}"
 	short_desc+=" - development files"
