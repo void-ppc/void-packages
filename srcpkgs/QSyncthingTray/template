@@ -13,6 +13,11 @@ homepage="https://github.com/sieren/QSyncthingTray"
 distfiles="https://github.com/sieren/QSyncthingTray/archive/${version}.tar.gz"
 checksum=ff428ac5a09e5df7bde3d71044062de104a6cb17a2918ae317061f5ad1394480
 
+case "$XBPS_TARGET_MACHINE" in
+        ppc64*) ;;
+        ppc*) broken="no webengine on 32-bit ppc" ;;
+esac
+
 do_install() {
 	# Install main binary
 	vbin ./build/QSyncthingTray
