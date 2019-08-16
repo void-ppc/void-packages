@@ -1,0 +1,32 @@
+From 8d50b8aaea0d4a7c3477662d3ab47589df106dee Mon Sep 17 00:00:00 2001
+From: q66 <daniel@octaforge.org>
+Date: Fri, 16 Aug 2019 15:19:20 +0200
+Subject: [PATCH 1/1] xuname: use "platform" for cpu instead of "vendor_id"
+ when missing
+
+Also provide a fallback when both are missing.
+---
+ xuname | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/xuname b/xuname
+index 065e3c0..a8691e1 100755
+--- xuname
++++ xuname
+@@ -8,6 +8,7 @@ OUTDATED=$(xbps-install -Mun)
+ HOLD=$(xbps-query -H)
+ VM=$(dmesg | awk '/Hypervisor detected/{print $NF}')
+ CPU=$(cat /proc/cpuinfo |awk '/^vendor_id/{print $NF;exit}')
++[ -z "$CPU" ] && CPU=$(cat /proc/cpuinfo |awk '/^platform/{print $NF;exit}')
+ REPO=$(xbps-query --regex -p repository -s '.' | cut -d/ -f2- | sort -u | awk '
+ 	/^\/alpha.de.repo.voidlinux.org\/current\/multilib/ {m=m"m"}
+ 	/^\/alpha.de.repo.voidlinux.org\/current\/debug/ {d=d"d"}
+@@ -19,4 +20,4 @@ REPO=$(xbps-query --regex -p repository -s '.' | cut -d/ -f2- | sort -u | awk '
+ ')
+ 
+ printf '%s %s %s %s %s%s %s\n' \
+-	"$OS" "$KVER" "$MACH" "$CPU${VM:+/$VM}" "${OUTDATED:+not}uptodate" "${HOLD:+ hold}" "$REPO"
++	"$OS" "$KVER" "$MACH" "${CPU:-Unknown}${VM:+/$VM}" "${OUTDATED:+not}uptodate" "${HOLD:+ hold}" "$REPO"
+-- 
+2.22.0
+
