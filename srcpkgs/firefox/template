@@ -36,12 +36,19 @@ if [ "$XBPS_WORDSIZE" -eq 32 ]; then
 	nodebug=yes
 fi
 
+case "$XBPS_MACHINE" in
+	ppc64*) ;;
+	ppc*) broken="rustc segfaults" ;;
+esac
+
 case $XBPS_TARGET_MACHINE in
 	armv6*)
 		broken="required NEON extensions are not supported on armv6"
 		;;
 	ppc64*) ;;
-	ppc*) broken="ftbfs in several places" ;;
+	ppc*)
+		makedepends+=" libatomic-devel"
+		;;
 esac
 
 post_extract() {
@@ -73,6 +80,16 @@ do_build() {
 	case "$XBPS_TARGET_MACHINE" in
 	x86_64*|i686*|arm*)
 		echo "ac_add_options --disable-elf-hack" >>.mozconfig
+		;;
+	esac
+
+	# webrtc currently fails to build on 32-bit ppc...
+	# also need explicit libatomic
+	case "$XBPS_TARGET_MACHINE" in
+	ppc64*) ;;
+	ppc*)
+		echo "ac_add_options --disable-webrtc" >>.mozconfig
+		export LDFLAGS+=" -latomic"
 		;;
 	esac
 
