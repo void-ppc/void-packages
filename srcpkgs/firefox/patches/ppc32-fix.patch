@@ -1,0 +1,43 @@
+--- xpcom/reflect/xptcall/md/unix/xptcinvoke_ppc_linux.cpp
++++ xpcom/reflect/xptcall/md/unix/xptcinvoke_ppc_linux.cpp
+@@ -45,11 +45,8 @@ invoke_copy_to_stack(uint32_t* d,
+     uint64_t tempu64;
+ 
+     for(uint32_t i = 0; i < paramCount; i++, s++) {
+-        if(s->IsPtrData()) {
+-            if(s->type == nsXPTType::T_JSVAL)
+-                tempu32 = (uint32_t) &s->ptr;
+-            else
+-                tempu32 = (uint32_t) s->ptr;
++        if(s->IsIndirect()) {
++            tempu32 = (uint32_t) &s->val;
+         }
+         else {
+             switch(s->type) {
+@@ -70,7 +67,7 @@ invoke_copy_to_stack(uint32_t* d,
+             }
+         }
+ 
+-        if (!s->IsPtrData() && s->type == nsXPTType::T_DOUBLE) {
++        if (!s->IsIndirect() && s->type == nsXPTType::T_DOUBLE) {
+ #ifndef __NO_FPRS__
+             if (fpr < FPR_COUNT)
+                 fpregs[fpr++]    = s->val.d;
+@@ -88,7 +85,7 @@ invoke_copy_to_stack(uint32_t* d,
+                 d += 2;
+             }
+         }
+-        else if (!s->IsPtrData() && s->type == nsXPTType::T_FLOAT) {
++        else if (!s->IsIndirect() && s->type == nsXPTType::T_FLOAT) {
+ #ifndef __NO_FPRS__
+             if (fpr < FPR_COUNT)
+                 fpregs[fpr++]   = s->val.f; // if passed in registers, floats are promoted to doubles
+@@ -99,7 +96,7 @@ invoke_copy_to_stack(uint32_t* d,
+             else
+                 *((float*) d++) = s->val.f;
+         }
+-        else if (!s->IsPtrData() && (s->type == nsXPTType::T_I64
++        else if (!s->IsIndirect() && (s->type == nsXPTType::T_I64
+                                      || s->type == nsXPTType::T_U64)) {
+             if (gpr & 1) gpr++; // longlongs are aligned in odd/even register pairs, eg. r5/r6
+             if ((gpr + 1) < GPR_COUNT) {
