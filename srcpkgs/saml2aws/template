@@ -13,6 +13,7 @@ license="MIT"
 homepage="https://github.com/Versent/saml2aws"
 distfiles="https://github.com/Versent/saml2aws/archive/v${version}.tar.gz"
 checksum=a453282699686dcb9cb1d854a3eb44e34a924fcdc682e9f1fc75edf3a8439245
+broken="agent_linux.go:19:26: cannot use buf.Sysname (type [65]uint8) as type [65]int8 in argument to charsToString"
 
 pre_build() {
 	cd $GOSRCPATH
