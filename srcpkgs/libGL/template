@@ -1,7 +1,8 @@
 # Template file for 'libGL'
 pkgname=libGL
 version=19.1.4
-revision=1
+# bumped
+revision=2
 wrksrc="mesa-${version}"
 build_style=meson
 configure_args="-Dshared-glapi=true -Dgbm=true -Degl=true
