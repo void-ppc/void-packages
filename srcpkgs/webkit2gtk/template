@@ -1,7 +1,6 @@
 # Template file for 'webkit2gtk'
 pkgname=webkit2gtk
-reverts="2.25.4_1"
-version=2.24.4
+version=2.25.92
 revision=1
 wrksrc="webkitgtk-${version}"
 build_style=cmake
@@ -16,7 +15,7 @@ configure_args="-DPORT=GTK -DUSE_LD_GOLD=OFF
  -DCMAKE_LINKER=${XBPS_CROSS_TRIPLET}-gcc
  -DRUBY_VERSION=2.6
  -DRUBY_CONFIG_INCLUDE_DIR=${XBPS_CROSS_BASE}/usr/include/ruby-2.6.0
- -DENABLE_GTKDOC=OFF -DUSE_GSTREAMER_GL=OFF
+ -DENABLE_GTKDOC=OFF -DUSE_GSTREAMER_GL=OFF -DUSE_WPE_RENDERER=OFF
  -DENABLE_JIT=$(vopt_if jit ON OFF)
  -DENABLE_C_LOOP=$(vopt_if jit OFF ON)
  -DENABLE_INTROSPECTION=$(vopt_if gir ON OFF)
@@ -38,15 +37,21 @@ maintainer="Enno Boland <gottox@voidlinux.org>"
 license="LGPL-2.1-or-later, BSD-2-Clause"
 homepage="https://webkitgtk.org/"
 distfiles="${homepage}/releases/webkitgtk-${version}.tar.xz"
-checksum=8668b129c026624ec226a4cccf4995f9d26f3e88fc28ab75b0e965f3c32b7dd8
+checksum=3ab9b82e863abb7329ec2af39baaf4ce98eb7d96bc61c3c35971b6860e7cc894
 
-build_options="gir wayland x11 jit sampling_profiler"
-build_options_default="gir wayland x11"
+build_options="gir wayland x11 bubblewrap jit sampling_profiler"
+build_options_default="gir wayland x11 bubblewrap"
 
+desc_option_bubblewrap="Enable bubblewrap sandbox"
 desc_option_jit="JavaScript JIT (Only some architectures)"
 desc_option_sampling_profiler="Sampling profiler support (JIT + glibc only)"
 
-CXXFLAGS="-Wno-expansion-to-defined -Wno-redundant-move -Wno-deprecated-copy"
+# detection + runtime
+if [ "$build_option_bubblewrap" ]; then
+	hostmakedepends+=" bubblewrap xdg-dbus-proxy"
+	makedepends+=" libseccomp-devel"
+	depends+=" bubblewrap xdg-dbus-proxy"
+fi
 
 # only a few platform support JIT
 case "$XBPS_TARGET_MACHINE" in
