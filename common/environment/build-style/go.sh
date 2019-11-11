@@ -1,9 +1,11 @@
+if [ -z "$go_skip_toolchain" ]; then
 if [ -z "$archs" ]; then
 	archs="aarch64* armv[567]* i686* x86_64* ppc64le*"
 fi
 hostmakedepends+=" go"
 nostrip=yes
 nopie=yes
+fi
 
 case "$XBPS_TARGET_MACHINE" in
 	aarch64*) export GOARCH=arm64;;
