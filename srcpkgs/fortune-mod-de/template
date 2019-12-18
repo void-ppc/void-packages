@@ -11,6 +11,7 @@ license="GPL-2"
 homepage="http://www.mabelsoft.org/fortune_de_utf8.htm"
 distfiles="http://www.mabelsoft.org/pub/fortune_deutsch_utf8.tgz"
 checksum=187ba6caf5f36b74384fab28c378f17b708442d5dd51b9a76a4c713310bcda80
+broken="source dead"
 
 do_install() {
 	vmkdir usr/share/fortunes
