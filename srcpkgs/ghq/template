@@ -13,6 +13,7 @@ license="MIT"
 homepage="https://github.com/motemen/ghq"
 distfiles="https://github.com/motemen/ghq/archive/v${version}.tar.gz"
 checksum=c5b9ff71ab533a2789da27368603852a3969c5cf8137b12b95e1bcbdaa816cf6
+broken="cli.BoolFlag does not implement cli.Flag (Apply method has pointer receiver)"
 
 post_install() {
 	vlicense LICENSE
