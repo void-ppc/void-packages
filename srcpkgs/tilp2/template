@@ -3,7 +3,7 @@ pkgname=tilp2
 version=1.18
 revision=1
 build_style=gnu-configure
-hostmakedepends="automake bison groff intltool libtool pkg-config texinfo"
+hostmakedepends="automake bison groff intltool libtool pkg-config"
 makedepends="gtk+-devel libusb-devel zlib-devel glib-devel libarchive-devel
  gettext-devel libticonv-devel libtifiles2-devel libticables2-devel
  libticalcs2-devel"
