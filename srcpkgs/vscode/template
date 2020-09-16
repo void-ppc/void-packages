@@ -2,11 +2,10 @@
 pkgname=vscode
 version=1.49.0
 revision=1
-# XXX: please update to electron9 next time you rebuild this package
-_electronver=7.3.3
+_electronver=9.2.1
 hostmakedepends="pkg-config python nodejs-lts-10 yarn tar git"
-makedepends="libxkbfile-devel libsecret-devel electron7"
-depends="libXtst libxkbfile nss dejavu-fonts-ttf xdg-utils ripgrep electron7"
+makedepends="libxkbfile-devel libsecret-devel electron9"
+depends="libXtst libxkbfile nss dejavu-fonts-ttf xdg-utils ripgrep electron9"
 short_desc="Microsoft Code for Linux"
 maintainer="shizonic <realtiaz@gmail.com>"
 license="MIT"
@@ -46,7 +45,7 @@ do_build() {
 	export NODE_OPTIONS="${_mem_limit}"
 	/usr/lib/node_modules/npm/bin/node-gyp-bin/node-gyp install \
 		--target=$_electronver \
-		--tarball=/usr/include/electron7/node_headers.tar.gz
+		--tarball=/usr/include/electron9/node_headers.tar.gz
 	yarn install --ignore-engines --frozen-lockfile --arch=x64
 	export CFLAGS="$CFLAGS -I/usr/include/node"
 	yarn run gulp vscode-linux-x64-min
