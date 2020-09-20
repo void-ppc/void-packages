@@ -154,7 +154,7 @@ EOF
     rm -f ${vkb64}
 
     mkdir -p ${rootfs}/usr/share/xbps.d
-    echo "repository=http://alpha.de.repo.voidlinux.org/current" > ${rootfs}/usr/share/xbps.d/00-repository-main.conf
+    echo "repository=https://auto.voidlinux-ppc.org/current/ppc/musl" > ${rootfs}/usr/share/xbps.d/00-repository-main.conf
 
     if ! xbps-install ${xbps_cachedir:+ -c $xbps_cachedir} \
 	    ${xbps_config:+-C $xbps_config} -r "${rootfs}" \
