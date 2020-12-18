@@ -11,8 +11,10 @@ short_desc="Rust package manager"
 maintainer="Enno Boland <gottox@voidlinux.org>"
 license="MIT, Apache-2.0"
 homepage="https://crates.io/"
-distfiles="https://github.com/rust-lang/cargo/archive/${version}.tar.gz"
-checksum=59ba1ce05becb4a5e0772d334d75f9dce3d5487ca288ac986e786241bb1cbac5
+distfiles="https://github.com/rust-lang/cargo/archive/${version}.tar.gz
+ https://github.com/alexcrichton/cc-rs/archive/1.0.66.tar.gz"
+checksum="59ba1ce05becb4a5e0772d334d75f9dce3d5487ca288ac986e786241bb1cbac5
+ 1f1a7c31f36cd439fe6a30edd02ceee32df809be5f7a5ddc5e27e7c7206eb985"
 replaces="cargo-tree>=0"
 
 build_options="static bindist"
@@ -79,12 +81,22 @@ case "$XBPS_MACHINE" in
 		checksum+="
 		 bad4a5d22da3c7548fd440d0d5a0b98e4de9894dedb35bfb58aaa5f141c23adb"
 		;;
+	ppcle)
+		checksum+="
+		 e0bd3ab09f0d8ca6327117cfcbdb5ac315ffe954454ba3ff2415a09405e15d43"
+		;;
 	*) broken="bootstrap binary unavailable for ${XBPS_MACHINE}";;
 esac
 
 post_extract() {
+	mv ../cc-rs-1.0.66 ./cc-rs
 	mkdir -p target/snapshot
 	cp ../cargo-${_cargo_dist_version}-${RUST_BUILD}/cargo/bin/cargo cargo
+}
+
+post_patch() {
+	echo "[patch.crates-io]" >> Cargo.toml
+	echo "cc = { path = './cc-rs' }" >> Cargo.toml
 }
 
 do_build() {
@@ -101,6 +113,9 @@ do_build() {
 	if [ -n "$_build_static" ]; then
 		cargs+=" --features=all-static"
 	fi
+
+	./cargo update
+	./cargo update --package cc --precise 1.0.66
 
 	./cargo build --release ${cargs}
 }
