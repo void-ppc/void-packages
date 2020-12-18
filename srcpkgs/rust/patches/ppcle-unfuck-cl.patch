@@ -1,0 +1,37 @@
+From 6074184ac76d8a8e04c201dcd1525257c1aaf2a8 Mon Sep 17 00:00:00 2001
+From: Daniel Kolesa <daniel@octaforge.org>
+Date: Fri, 18 Dec 2020 07:42:37 +0100
+Subject: [PATCH] some naive ppcle unfucking
+
+---
+ vendor/cc-1.0.59/src/lib.rs | 1 +
+ vendor/cc/src/lib.rs        | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/vendor/cc-1.0.59/src/lib.rs b/vendor/cc-1.0.59/src/lib.rs
+index fecc0730..34e04a0a 100644
+--- a/vendor/cc-1.0.59/src/lib.rs
++++ b/vendor/cc-1.0.59/src/lib.rs
+@@ -2552,6 +2552,7 @@ impl Tool {
+                 && !fname.contains("cloudabi")
+                 && !fname.contains("uclibc")
+                 && !fname.contains("clang")
++                && !fname.contains("powerpcle")
+             {
+                 ToolFamily::Msvc { clang_cl: false }
+             } else if fname.contains("clang") {
+diff --git a/vendor/cc/src/lib.rs b/vendor/cc/src/lib.rs
+index aff6be86..c9b4e3e8 100644
+--- a/vendor/cc/src/lib.rs
++++ b/vendor/cc/src/lib.rs
+@@ -2560,6 +2560,7 @@ impl Tool {
+                 && !fname.contains("cloudabi")
+                 && !fname.contains("uclibc")
+                 && !fname.contains("clang")
++                && !fname.contains("powerpcle")
+             {
+                 ToolFamily::Msvc { clang_cl: false }
+             } else if fname.contains("clang") {
+-- 
+2.29.2
+
