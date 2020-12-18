@@ -1,0 +1,10 @@
+--- cc-rs/src/lib.rs
++++ cc-rs/src/lib.rs
+@@ -2560,6 +2560,7 @@ impl Tool {
+                 && !fname.contains("cloudabi")
+                 && !fname.contains("uclibc")
+                 && !fname.contains("clang")
++                && !fname.contains("powerpcle")
+             {
+                 ToolFamily::Msvc { clang_cl: false }
+             } else if fname.contains("clang") {
