@@ -83,6 +83,10 @@ case "$XBPS_MACHINE" in
 		checksum+="
 		 bad4a5d22da3c7548fd440d0d5a0b98e4de9894dedb35bfb58aaa5f141c23adb"
 		;;
+	ppcle)
+		checksum+="
+		 e0bd3ab09f0d8ca6327117cfcbdb5ac315ffe954454ba3ff2415a09405e15d43"
+		;;
 	*) broken="cargo bootstrap binary unavailable for ${XBPS_MACHINE}";;
 esac
 
@@ -147,6 +151,11 @@ else
 			 4147cae868df4e936409331ee9e2d81d47529d05a7a2e045d7f566e09eb4f302
 			 20132e5c67a67399e7945ba17d698a6aa1833f87b89bfc8a5a1678d75cfc637d"
 			;;
+		ppcle)
+			checksum+="
+			 5c0652392fe226f3749d7424f66f27b56d4ba6d38381d884dc2c2d68a2833408
+			 7c787042ec30f557876d27eefcf68cfec5ed0118563bf2f520b60941c56c12ec"
+			;;
 		*) broken="rust bootstrap binaries unavailable for ${XBPS_MACHINE}";;
 	esac
 fi
@@ -183,6 +192,8 @@ post_patch() {
 	# clear out all the checksum nonsense of patched vendor crates
 	_clear_vendor_checksums libc
 	_clear_vendor_checksums typenum
+	_clear_vendor_checksums cc
+	_clear_vendor_checksums cc-1.0.59
 }
 
 do_configure() {
