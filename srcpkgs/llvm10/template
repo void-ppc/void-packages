@@ -5,7 +5,7 @@ revision=8
 build_style=meta
 short_desc="Low Level Virtual Machine (removed package)"
 maintainer="q66 <daniel@octaforge.org>"
-license="metapackage"
+license="NCSA"
 homepage="https://www.llvm.org"
 
 libllvm10_package() {
